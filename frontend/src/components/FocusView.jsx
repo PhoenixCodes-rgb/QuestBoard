@@ -22,29 +22,79 @@ const MODES = {
   longBreak: { label: "Long Break", minutes: 15, icon: <FiCoffee size={16} /> },
 };
 
-function playAudioChime() {
+// Persistent AudioContext instance to satisfy browser autoplay policies
+let sharedAudioCtx = null;
+
+function getAudioContext() {
   try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = "sine";
-    // Pleasant two-tone chime (F5 -> A5)
-    osc.frequency.setValueAtTime(698.46, ctx.currentTime);
-    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.18);
-
-    gain.gain.setValueAtTime(0.25, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.4);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start();
-    osc.stop(ctx.currentTime + 1.4);
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return null;
+    if (!sharedAudioCtx || sharedAudioCtx.state === "closed") {
+      sharedAudioCtx = new AudioContextClass();
+    }
+    if (sharedAudioCtx.state === "suspended") {
+      sharedAudioCtx.resume().catch(() => {});
+    }
+    return sharedAudioCtx;
   } catch {
-    // AudioContext blocked or not supported
+    return null;
+  }
+}
+
+// Rich harmonic meditation / productivity bell chime
+export function playChimeSound() {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const playNotes = () => {
+      const now = ctx.currentTime;
+      // Beautiful harmonic major chord progression: C5 -> E5 -> G5 -> C6
+      const notes = [
+        { freq: 523.25, start: 0.0, duration: 1.8, gain: 0.35 },
+        { freq: 659.25, start: 0.16, duration: 2.0, gain: 0.38 },
+        { freq: 783.99, start: 0.32, duration: 2.2, gain: 0.40 },
+        { freq: 1046.5, start: 0.48, duration: 2.5, gain: 0.45 },
+      ];
+
+      notes.forEach(({ freq, start, duration, gain: peakGain }) => {
+        const osc = ctx.createOscillator();
+        const harmonic = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+
+        // Fundamental tone
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, now + start);
+
+        // Subtle bell harmonic (octave + fifth overtone)
+        harmonic.type = "sine";
+        harmonic.frequency.setValueAtTime(freq * 2.01, now + start);
+
+        // Bell envelope: instant soft attack followed by gentle exponential decay
+        const startTime = now + start;
+        gainNode.gain.setValueAtTime(0.0001, startTime);
+        gainNode.gain.linearRampToValueAtTime(peakGain, startTime + 0.03);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+        osc.connect(gainNode);
+        harmonic.connect(gainNode);
+        gainNode.connect(ctx.destination);
+
+        osc.start(startTime);
+        harmonic.start(startTime);
+        osc.stop(startTime + duration);
+        harmonic.stop(startTime + duration);
+      });
+    };
+
+    if (ctx.state === "suspended") {
+      ctx.resume().then(playNotes).catch(playNotes);
+    } else {
+      playNotes();
+    }
+  } catch (err) {
+    console.warn("Chime audio playback error:", err);
   }
 }
 
@@ -116,7 +166,7 @@ function FocusView({ tasks = [], onToggleTask }) {
             setIsRunning(false);
 
             if (soundEnabled) {
-              playAudioChime();
+              playChimeSound();
             }
 
             if (currentMode === "focus") {
@@ -259,9 +309,15 @@ function FocusView({ tasks = [], onToggleTask }) {
           {/* Sound & Zen Exit controls */}
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setSoundEnabled(!soundEnabled)}
+              onClick={() => {
+                const next = !soundEnabled;
+                setSoundEnabled(next);
+                if (next) {
+                  playChimeSound();
+                }
+              }}
               className="flex h-9 w-9 items-center justify-center rounded-xl bg-gray-50 text-gray-500 transition hover:bg-gray-100 dark:bg-[#1f2d24] dark:text-gray-300 dark:hover:bg-[#283b2f]"
-              title={soundEnabled ? "Mute chime sound" : "Enable chime sound"}
+              title={soundEnabled ? "Chime enabled (click to preview & mute)" : "Chime muted (click to enable)"}
             >
               {soundEnabled ? <FiVolume2 size={16} /> : <FiVolumeX size={16} />}
             </button>
@@ -337,7 +393,10 @@ function FocusView({ tasks = [], onToggleTask }) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setIsRunning(!isRunning)}
+            onClick={() => {
+              getAudioContext(); // Unlocks audio on user gesture
+              setIsRunning(!isRunning);
+            }}
             className="flex h-16 w-28 items-center justify-center gap-2 rounded-full bg-[#193b27] text-base font-semibold text-white shadow-md transition hover:bg-green-800 dark:bg-green-700 dark:hover:bg-green-600"
           >
             {isRunning ? (
@@ -366,7 +425,18 @@ function FocusView({ tasks = [], onToggleTask }) {
         <div className={`flex flex-wrap items-center justify-center gap-2 border-t border-gray-100 dark:border-[#233428] ${
           isZenMode ? "mt-5 pt-4" : "mt-8 pt-6"
         }`}>
-          <span className="text-xs text-gray-400">Duration:</span>
+          <div className="flex items-center gap-2 pr-1">
+            <span className="text-xs text-gray-400">Duration:</span>
+            <button
+              type="button"
+              onClick={() => playChimeSound()}
+              className="flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-0.5 text-[11px] font-semibold text-green-700 transition hover:bg-green-100 dark:bg-green-950/60 dark:text-green-300 dark:hover:bg-green-900/60"
+              title="Click to preview the completion chime"
+            >
+              <FiVolume2 size={11} />
+              <span>Test Chime</span>
+            </button>
+          </div>
           {[15, 25, 45, 60].map((m) => (
             <button
               key={m}
