@@ -6,15 +6,6 @@ const getBaseURL = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL.replace(/\/$/, "");
   }
-  // If running locally in Vite dev mode with local backend
-  if (
-    typeof window !== "undefined" &&
-    window.location.hostname === "localhost" &&
-    window.location.port === "5173"
-  ) {
-    // Return empty to use Vite proxy if local backend is running, otherwise CLOUD_BACKEND_URL
-    return "";
-  }
   return CLOUD_BACKEND_URL;
 };
 
