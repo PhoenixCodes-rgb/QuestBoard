@@ -266,7 +266,7 @@ function SettingsView({ user, onUserUpdated, onLogout, totalTasks = 0 }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#233428] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
+              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#233428] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500 dark:focus:bg-[#15221a]"
             />
           </div>
 
@@ -344,7 +344,7 @@ function SettingsView({ user, onUserUpdated, onLogout, totalTasks = 0 }) {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="••••••••"
-              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#233428] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
+              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#233428] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500 dark:focus:bg-[#15221a]"
             />
           </div>
 
@@ -358,7 +358,7 @@ function SettingsView({ user, onUserUpdated, onLogout, totalTasks = 0 }) {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="At least 6 characters"
-                className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#233428] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
+                className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#233428] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500 dark:focus:bg-[#15221a]"
               />
             </div>
 
@@ -371,7 +371,7 @@ function SettingsView({ user, onUserUpdated, onLogout, totalTasks = 0 }) {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Repeat new password"
-                className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#233428] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
+                className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#233428] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500 dark:focus:bg-[#15221a]"
               />
             </div>
           </div>

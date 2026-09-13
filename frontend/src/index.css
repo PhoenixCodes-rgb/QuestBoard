@@ -17,3 +17,14 @@ html.dark body {
   background: #0f1712;
   color: #f0f5f1;
 }
+
+/* Chrome/Edge/Safari Autofill Dark Mode Styling */
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #111a14 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

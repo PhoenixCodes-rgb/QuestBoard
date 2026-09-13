@@ -141,7 +141,7 @@ export default function Auth({ onLoginSuccess }) {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="mt-1 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-green-600 focus:bg-white dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
+                className="mt-1 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-green-600 focus:bg-white dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:bg-[#15221a]"
                 placeholder="John Doe"
               />
             </div>
@@ -154,7 +154,7 @@ export default function Auth({ onLoginSuccess }) {
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="mt-1 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-green-600 focus:bg-white dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
+              className="mt-1 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-green-600 focus:bg-white dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:bg-[#15221a]"
               placeholder="you@example.com"
             />
           </div>
@@ -166,7 +166,7 @@ export default function Auth({ onLoginSuccess }) {
               required
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="mt-1 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-green-600 focus:bg-white dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
+              className="mt-1 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-green-600 focus:bg-white dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:bg-[#15221a]"
               placeholder="••••••••"
             />
           </div>
