@@ -60,7 +60,7 @@ export default function Auth({ onLoginSuccess }) {
       if (!err.response) {
         setServerOnline(false);
         setError(
-          "Cannot connect to the server. Please ensure the backend server is running on port 5000 (run 'npm run dev' inside the backend folder)."
+          "Cannot connect to the server. If this is your first visit, the cloud backend may take ~30–45 seconds to wake up from sleep mode. Please wait a moment and try again."
         );
       } else {
         setError(err.response?.data?.message || "Authentication failed. Please check your credentials.");
@@ -110,7 +110,7 @@ export default function Auth({ onLoginSuccess }) {
             <div className="flex items-start gap-2">
               <FiAlertTriangle size={16} className="mt-0.5 shrink-0 text-amber-600" />
               <span>
-                <strong>Backend Server Offline:</strong> Port 5000 is not responding. Start the backend with <code className="rounded bg-amber-100 px-1 py-0.5 font-mono dark:bg-amber-900/60">npm run dev</code> in the backend folder.
+                <strong>Backend Server Offline / Starting:</strong> Unable to connect. If using the cloud server, it may take 30–45s to wake up on first visit.
               </span>
             </div>
             <button

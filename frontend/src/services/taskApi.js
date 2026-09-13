@@ -1,17 +1,26 @@
 import axios from "axios";
 
+export const CLOUD_BACKEND_URL = "https://questboard-backend-nxei.onrender.com";
+
 const getBaseURL = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL.replace(/\/$/, "");
   }
-  if (typeof window !== "undefined" && window.location.port === "5173") {
+  // If running locally in Vite dev mode with local backend
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname === "localhost" &&
+    window.location.port === "5173"
+  ) {
+    // Return empty to use Vite proxy if local backend is running, otherwise CLOUD_BACKEND_URL
     return "";
   }
-  return "http://localhost:5000";
+  return CLOUD_BACKEND_URL;
 };
 
 const API = axios.create({
   baseURL: getBaseURL(),
+  timeout: 45000, // Render free tier can take up to 40s to wake up from cold sleep
 });
 
 export const checkServerHealth = async () => {
@@ -19,9 +28,8 @@ export const checkServerHealth = async () => {
     const res = await API.get("/");
     return Boolean(res.data?.message);
   } catch {
-    const fallbackUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
     try {
-      const res = await axios.get(`${fallbackUrl}/`);
+      const res = await axios.get(`${CLOUD_BACKEND_URL}/`, { timeout: 8000 });
       return Boolean(res.data?.message);
     } catch {
       return false;
