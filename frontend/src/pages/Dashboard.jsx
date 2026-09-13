@@ -19,6 +19,7 @@ import CalendarView from "../components/CalendarView";
 import CompletedView from "../components/CompletedView";
 import StatisticsView from "../components/StatisticsView";
 import SettingsView from "../components/SettingsView";
+import FocusView from "../components/FocusView";
 
 import {
   getTasks,
@@ -86,7 +87,7 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
       }
 
       setError(
-        err.response?.data?.message || "Unable to load your tasks."
+        err.response?.data?.message || "Unable to load your tasks. Please make sure the backend server is running."
       );
     } finally {
       setLoading(false);
@@ -252,7 +253,7 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
   const firstName = user?.name ? user.name.split(" ")[0] : "there";
 
   return (
-    <div className="min-h-screen bg-[#f5f7f2] text-[#17251b]">
+    <div className="min-h-screen bg-[#f5f7f2] text-[#17251b] transition-colors duration-200 dark:bg-[#0f1712] dark:text-[#f0f5f1]">
       <div className="flex min-h-screen">
         {/* Sidebar */}
         <Sidebar
@@ -296,6 +297,11 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
               searchQuery={searchQuery}
               onClearSearch={() => setSearchQuery("")}
             />
+          ) : activeTab === "focus" ? (
+            <FocusView
+              tasks={allTasks}
+              onToggleTask={handleToggle}
+            />
           ) : activeTab === "calendar" ? (
             <CalendarView
               tasks={allTasks}
@@ -334,15 +340,15 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-8"
               >
-                <p className="text-sm font-medium text-green-700">
+                <p className="text-sm font-medium text-green-700 dark:text-green-400">
                   {isToday ? "Today" : formattedDate}
                 </p>
 
-                <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                   Good day, {firstName} 👋
                 </h1>
 
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 text-gray-500 dark:text-gray-400">
                   Let's make today productive.
                 </p>
               </motion.section>
@@ -355,12 +361,14 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                   percentage={completionPercentage}
                 />
 
-                <div className="rounded-3xl bg-white p-6 shadow-sm">
-                  <p className="text-sm text-gray-500">Tasks</p>
+                <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 dark:border-[#233428] dark:bg-[#17231c]">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Tasks</p>
 
-                  <h2 className="mt-3 text-4xl font-semibold">{totalCount}</h2>
+                  <h2 className="mt-3 text-4xl font-semibold text-gray-900 dark:text-white">
+                    {totalCount}
+                  </h2>
 
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                     {completedCount} completed
                   </p>
                 </div>
@@ -387,11 +395,11 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                 {/* Task header */}
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <h2 className="text-2xl font-semibold">
+                    <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
                       {isToday ? "Today's tasks" : "Tasks"}
                     </h2>
 
-                    <p className="mt-1 text-sm text-gray-500">
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                       {formattedDate}
                     </p>
                   </div>
@@ -399,7 +407,7 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => changeDate(-1)}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-500 shadow-sm transition hover:bg-gray-100"
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-500 shadow-sm transition hover:bg-gray-100 dark:bg-[#17231c] dark:text-gray-300 dark:hover:bg-[#1f2e24]"
                       title="Previous day"
                     >
                       <FiChevronLeft />
@@ -408,14 +416,14 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                     <button
                       onClick={goToToday}
                       disabled={isToday}
-                      className="hidden rounded-full bg-white px-4 py-2.5 text-sm font-medium text-gray-600 shadow-sm transition hover:bg-gray-100 disabled:cursor-default disabled:opacity-50 sm:block"
+                      className="hidden rounded-full bg-white px-4 py-2.5 text-sm font-medium text-gray-600 shadow-sm transition hover:bg-gray-100 disabled:cursor-default disabled:opacity-50 dark:bg-[#17231c] dark:text-gray-300 dark:hover:bg-[#1f2e24] sm:block"
                     >
                       Today
                     </button>
 
                     <button
                       onClick={() => changeDate(1)}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-500 shadow-sm transition hover:bg-gray-100"
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-500 shadow-sm transition hover:bg-gray-100 dark:bg-[#17231c] dark:text-gray-300 dark:hover:bg-[#1f2e24]"
                       title="Next day"
                     >
                       <FiChevronRight />
@@ -425,7 +433,7 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                       whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.96 }}
                       onClick={() => openCreateModal()}
-                      className="ml-1 flex items-center gap-2 rounded-full bg-[#193b27] px-5 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-green-800"
+                      className="ml-1 flex items-center gap-2 rounded-full bg-[#193b27] px-5 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-green-800 dark:bg-green-700 dark:hover:bg-green-600"
                     >
                       <FiPlus />
                       <span>Add task</span>
@@ -435,7 +443,7 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
 
                 {/* Active search filter badge */}
                 {searchQuery && (
-                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-green-50 px-4 py-2.5 text-xs text-[#193b27]">
+                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-green-50 px-4 py-2.5 text-xs text-[#193b27] dark:bg-green-950/40 dark:text-green-300">
                     <span>
                       Filtering this day for: <strong>"{searchQuery}"</strong> ({dayTasks.length} found)
                     </span>
@@ -455,7 +463,7 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      className="mt-5 flex items-center justify-between rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600"
+                      className="mt-5 flex items-center justify-between rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600 dark:bg-red-950/40 dark:text-red-300"
                     >
                       <span>{error}</span>
 
@@ -476,7 +484,7 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                     {[1, 2, 3].map((item) => (
                       <div
                         key={item}
-                        className="h-24 animate-pulse rounded-2xl bg-white"
+                        className="h-24 animate-pulse rounded-2xl bg-white dark:bg-[#17231c]"
                       />
                     ))}
                   </div>
@@ -485,19 +493,19 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="mt-5 flex flex-col items-center justify-center rounded-3xl bg-white px-6 py-16 text-center shadow-sm"
+                    className="mt-5 flex flex-col items-center justify-center rounded-3xl border border-gray-100 bg-white px-6 py-16 text-center shadow-sm transition-colors duration-200 dark:border-[#233428] dark:bg-[#17231c]"
                   >
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600 dark:bg-green-950/50 dark:text-green-400">
                       <FiCheckCircle size={28} />
                     </div>
 
-                    <h3 className="mt-5 text-lg font-semibold">
+                    <h3 className="mt-5 text-lg font-semibold text-gray-900 dark:text-white">
                       {searchQuery
                         ? "No tasks match your search on this day"
                         : "No tasks for this day"}
                     </h3>
 
-                    <p className="mt-2 max-w-sm text-sm text-gray-500">
+                    <p className="mt-2 max-w-sm text-sm text-gray-500 dark:text-gray-400">
                       {searchQuery
                         ? "Try clearing your search query above."
                         : "You're all clear. Add a task and start planning your day."}
@@ -505,7 +513,7 @@ function Dashboard({ user, onLogout, onUserUpdated }) {
 
                     <button
                       onClick={() => openCreateModal()}
-                      className="mt-6 rounded-full bg-[#193b27] px-5 py-3 text-sm font-medium text-white transition hover:bg-green-800"
+                      className="mt-6 rounded-full bg-[#193b27] px-5 py-3 text-sm font-medium text-white transition hover:bg-green-800 dark:bg-green-700 dark:hover:bg-green-600"
                     >
                       + Add your first task
                     </button>

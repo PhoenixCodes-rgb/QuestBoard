@@ -110,7 +110,7 @@ function AddTask({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-xs"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -118,16 +118,16 @@ function AddTask({
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-3xl bg-white p-7 shadow-2xl"
+            className="w-full max-w-lg rounded-3xl border border-gray-100 bg-white p-7 shadow-2xl transition-colors duration-200 dark:border-[#233428] dark:bg-[#17231c]"
           >
             {/* Header */}
             <div className="flex items-start justify-between">
               <div>
-                <h2 className="text-2xl font-semibold text-gray-900">
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
                   {isEditing ? "Edit task" : "Create a new task"}
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   {isEditing
                     ? "Update the details of your task."
                     : "What do you want to accomplish?"}
@@ -137,7 +137,7 @@ function AddTask({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition hover:bg-gray-200"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition hover:bg-gray-200 dark:bg-[#1f2d24] dark:text-gray-300 dark:hover:bg-[#283b2f]"
               >
                 <FiX />
               </button>
@@ -148,7 +148,7 @@ function AddTask({
               <motion.div
                 initial={{ opacity: 0, y: -5 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600"
+                className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600 dark:bg-red-950/50 dark:text-red-300"
               >
                 {error}
               </motion.div>
@@ -161,7 +161,7 @@ function AddTask({
             >
               {/* Title */}
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Task title
                 </label>
 
@@ -172,13 +172,13 @@ function AddTask({
                   onChange={handleChange}
                   placeholder="e.g. Study DSA"
                   autoFocus
-                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100"
+                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:bg-[#111a14]"
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Description
                 </label>
 
@@ -188,7 +188,7 @@ function AddTask({
                   onChange={handleChange}
                   rows="3"
                   placeholder="Add some details..."
-                  className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100"
+                  className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:bg-[#111a14]"
                 />
               </div>
 
@@ -196,37 +196,37 @@ function AddTask({
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* Date */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Date
                   </label>
 
                   <div className="relative">
-                    <FiCalendar className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <FiCalendar className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
 
                     <input
                       type="date"
                       name="date"
                       value={formData.date}
                       onChange={handleChange}
-                      className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 pl-11 text-sm outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100"
+                      className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 pl-11 text-sm outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
                     />
                   </div>
                 </div>
 
                 {/* Priority */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Priority
                   </label>
 
                   <div className="relative">
-                    <FiFlag className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <FiFlag className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
 
                     <select
                       name="priority"
                       value={formData.priority}
                       onChange={handleChange}
-                      className="w-full appearance-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 pl-11 text-sm outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100"
+                      className="w-full appearance-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 pl-11 text-sm outline-none transition focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 dark:border-[#2b3d31] dark:bg-[#111a14] dark:text-white dark:focus:border-green-500"
                     >
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
@@ -242,7 +242,7 @@ function AddTask({
                   type="button"
                   onClick={onClose}
                   disabled={loading}
-                  className="rounded-full px-5 py-3 text-sm font-medium text-gray-600 transition hover:bg-gray-100 disabled:opacity-50"
+                  className="rounded-full px-5 py-3 text-sm font-medium text-gray-600 transition hover:bg-gray-100 disabled:opacity-50 dark:text-gray-300 dark:hover:bg-[#1f2d24]"
                 >
                   Cancel
                 </button>
@@ -250,7 +250,7 @@ function AddTask({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="min-w-32 rounded-full bg-[#193b27] px-6 py-3 text-sm font-medium text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="min-w-32 rounded-full bg-[#193b27] px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-green-700 dark:hover:bg-green-600"
                 >
                   {loading
                     ? isEditing

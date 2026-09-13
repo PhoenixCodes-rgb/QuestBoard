@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiCheckCircle, FiTrash2, FiClock, FiX } from "react-icons/fi";
+import { FiCheckCircle, FiTrash2, FiX } from "react-icons/fi";
 import TaskCard from "./TaskCard";
 
 function CompletedView({
@@ -49,10 +49,10 @@ function CompletedView({
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl text-gray-900 dark:text-white">
             Completed Tasks
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             A review of all tasks you've accomplished.
           </p>
         </div>
@@ -60,7 +60,7 @@ function CompletedView({
         {completedTasks.length > 0 && (
           <button
             onClick={handleClear}
-            className="flex items-center gap-2 self-start rounded-full border border-red-200 bg-red-50 px-4 py-2.5 text-xs font-medium text-red-600 transition hover:bg-red-100 sm:self-auto"
+            className="flex items-center gap-2 self-start rounded-full border border-red-200 bg-red-50 px-4 py-2.5 text-xs font-medium text-red-600 transition hover:bg-red-100 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 sm:self-auto"
           >
             <FiTrash2 size={14} />
             <span>Clear all completed</span>
@@ -70,19 +70,19 @@ function CompletedView({
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-3xl bg-white p-6 shadow-sm">
-          <p className="text-xs font-medium uppercase tracking-wider text-gray-400">
+        <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 dark:border-[#233428] dark:bg-[#17231c]">
+          <p className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
             Finished Tasks
           </p>
           <div className="mt-3 flex items-baseline gap-3">
-            <h2 className="text-4xl font-semibold text-gray-900">
+            <h2 className="text-4xl font-semibold text-gray-900 dark:text-white">
               {completedCount}
             </h2>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-gray-400">
               out of {totalAllTasks} total
             </span>
           </div>
-          <p className="mt-2 text-xs text-gray-400">
+          <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
             Great work staying on top of your responsibilities!
           </p>
         </div>
@@ -107,7 +107,7 @@ function CompletedView({
 
       {/* Search query banner */}
       {searchQuery && (
-        <div className="flex items-center justify-between rounded-2xl bg-green-50 px-4 py-2.5 text-xs text-[#193b27]">
+        <div className="flex items-center justify-between rounded-2xl bg-green-50 px-4 py-2.5 text-xs text-[#193b27] dark:bg-green-950/40 dark:text-green-300">
           <span>
             Filtering completed tasks for: <strong>"{searchQuery}"</strong> ({completedTasks.length} found)
           </span>
@@ -125,19 +125,19 @@ function CompletedView({
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center justify-center rounded-3xl bg-white px-6 py-16 text-center shadow-sm"
+          className="flex flex-col items-center justify-center rounded-3xl border border-gray-100 bg-white px-6 py-16 text-center shadow-sm transition-colors duration-200 dark:border-[#233428] dark:bg-[#17231c]"
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600 dark:bg-green-950/50 dark:text-green-400">
             <FiCheckCircle size={28} />
           </div>
 
-          <h3 className="mt-5 text-lg font-semibold">
+          <h3 className="mt-5 text-lg font-semibold text-gray-900 dark:text-white">
             {searchQuery
               ? "No matching completed tasks"
               : "No completed tasks yet"}
           </h3>
 
-          <p className="mt-2 max-w-sm text-sm text-gray-500">
+          <p className="mt-2 max-w-sm text-sm text-gray-500 dark:text-gray-400">
             {searchQuery
               ? "Try adjusting your search terms."
               : "When you mark tasks as done in your Dashboard or All Tasks view, they will be proudly displayed here."}

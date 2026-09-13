@@ -9,11 +9,14 @@ const generateToken = (id) => {
 
 // REGISTER USER
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  let { name, email, password } = req.body;
 
   if (!name || !email || !password) {
     return res.status(400).json({ message: "Please enter all fields" });
   }
+
+  name = name.trim();
+  email = email.trim().toLowerCase();
 
   const userExists = await User.findOne({ email });
   if (userExists) {
@@ -40,7 +43,13 @@ const registerUser = asyncHandler(async (req, res) => {
 
 // LOGIN USER
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "Please enter email and password" });
+  }
+
+  email = email.trim().toLowerCase();
 
   const user = await User.findOne({ email });
   if (!user) {

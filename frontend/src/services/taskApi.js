@@ -1,8 +1,25 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL:
+    typeof window !== "undefined" && window.location.port === "5173"
+      ? ""
+      : "http://localhost:5000",
 });
+
+export const checkServerHealth = async () => {
+  try {
+    const res = await API.get("/");
+    return Boolean(res.data?.message);
+  } catch {
+    try {
+      const res = await axios.get("http://localhost:5000/");
+      return Boolean(res.data?.message);
+    } catch {
+      return false;
+    }
+  }
+};
 
 // Auto-inject JWT into headers
 API.interceptors.request.use((config) => {

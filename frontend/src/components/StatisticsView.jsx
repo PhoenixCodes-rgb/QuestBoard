@@ -53,10 +53,10 @@ function StatisticsView({ tasks = [] }) {
     <div className="mt-8 space-y-8">
       {/* Title */}
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+        <h1 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
           Productivity Statistics
         </h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Analytics and insights into your habits and task execution.
         </p>
       </div>
@@ -64,67 +64,67 @@ function StatisticsView({ tasks = [] }) {
       {/* Top 4 KPI Metrics */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {/* Total Tasks */}
-        <div className="rounded-3xl bg-white p-6 shadow-sm">
+        <div className="rounded-3xl border border-transparent bg-white p-6 shadow-sm dark:border-[#233428] dark:bg-[#17231c]">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-400">
+            <span className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
               Total Created
             </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gray-50 text-gray-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gray-50 text-gray-600 dark:bg-[#1f3025] dark:text-gray-300">
               <FiBarChart2 size={18} />
             </div>
           </div>
-          <h2 className="mt-4 text-3xl font-semibold text-gray-900">
+          <h2 className="mt-4 text-3xl font-semibold text-gray-900 dark:text-white">
             {stats.total}
           </h2>
-          <p className="mt-1 text-xs text-gray-500">Tasks on record</p>
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Tasks on record</p>
         </div>
 
         {/* Completed Tasks */}
-        <div className="rounded-3xl bg-white p-6 shadow-sm">
+        <div className="rounded-3xl border border-transparent bg-white p-6 shadow-sm dark:border-[#233428] dark:bg-[#17231c]">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-400">
+            <span className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
               Completed
             </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-green-50 text-green-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-green-50 text-green-600 dark:bg-green-950/40 dark:text-green-400">
               <FiCheckCircle size={18} />
             </div>
           </div>
-          <h2 className="mt-4 text-3xl font-semibold text-green-700">
+          <h2 className="mt-4 text-3xl font-semibold text-green-700 dark:text-green-400">
             {stats.completed}
           </h2>
-          <p className="mt-1 text-xs text-gray-500">Accomplished</p>
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Accomplished</p>
         </div>
 
         {/* Pending Tasks */}
-        <div className="rounded-3xl bg-white p-6 shadow-sm">
+        <div className="rounded-3xl border border-transparent bg-white p-6 shadow-sm dark:border-[#233428] dark:bg-[#17231c]">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-400">
+            <span className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
               In Progress
             </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-50 text-amber-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400">
               <FiClock size={18} />
             </div>
           </div>
-          <h2 className="mt-4 text-3xl font-semibold text-amber-600">
+          <h2 className="mt-4 text-3xl font-semibold text-amber-600 dark:text-amber-400">
             {stats.pending}
           </h2>
-          <p className="mt-1 text-xs text-gray-500">Awaiting completion</p>
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Awaiting completion</p>
         </div>
 
         {/* Overdue */}
-        <div className="rounded-3xl bg-white p-6 shadow-sm">
+        <div className="rounded-3xl border border-transparent bg-white p-6 shadow-sm dark:border-[#233428] dark:bg-[#17231c]">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-400">
+            <span className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
               Overdue
             </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-red-50 text-red-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400">
               <FiAlertCircle size={18} />
             </div>
           </div>
-          <h2 className="mt-4 text-3xl font-semibold text-red-600">
+          <h2 className="mt-4 text-3xl font-semibold text-red-600 dark:text-red-400">
             {stats.overdue}
           </h2>
-          <p className="mt-1 text-xs text-gray-500">Past due date</p>
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Past due date</p>
         </div>
       </div>
 
@@ -178,11 +178,11 @@ function StatisticsView({ tasks = [] }) {
         </div>
 
         {/* Priority Distribution Card */}
-        <div className="rounded-3xl bg-white p-7 shadow-sm lg:col-span-2">
-          <h3 className="text-lg font-semibold text-gray-900">
+        <div className="rounded-3xl border border-transparent bg-white p-7 shadow-sm dark:border-[#233428] dark:bg-[#17231c] lg:col-span-2">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             Priority Breakdown
           </h3>
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
             Review how you handle high, medium, and low priority tasks.
           </p>
 
@@ -190,10 +190,10 @@ function StatisticsView({ tasks = [] }) {
             {/* High Priority */}
             <div>
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-red-600">
+                <span className="font-semibold text-red-600 dark:text-red-400">
                   High Priority
                 </span>
-                <span className="text-gray-500">
+                <span className="text-gray-500 dark:text-gray-400">
                   {stats.high.completed} of {stats.high.total} completed (
                   {stats.high.total > 0
                     ? Math.round((stats.high.completed / stats.high.total) * 100)
@@ -201,7 +201,7 @@ function StatisticsView({ tasks = [] }) {
                   %)
                 </span>
               </div>
-              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-gray-100">
+              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-[#233428]">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{
@@ -220,10 +220,10 @@ function StatisticsView({ tasks = [] }) {
             {/* Medium Priority */}
             <div>
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-yellow-700">
+                <span className="font-semibold text-yellow-700 dark:text-yellow-400">
                   Medium Priority
                 </span>
-                <span className="text-gray-500">
+                <span className="text-gray-500 dark:text-gray-400">
                   {stats.medium.completed} of {stats.medium.total} completed (
                   {stats.medium.total > 0
                     ? Math.round(
@@ -233,7 +233,7 @@ function StatisticsView({ tasks = [] }) {
                   %)
                 </span>
               </div>
-              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-gray-100">
+              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-[#233428]">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{
@@ -252,8 +252,8 @@ function StatisticsView({ tasks = [] }) {
             {/* Low Priority */}
             <div>
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-blue-600">Low Priority</span>
-                <span className="text-gray-500">
+                <span className="font-semibold text-blue-600 dark:text-blue-400">Low Priority</span>
+                <span className="text-gray-500 dark:text-gray-400">
                   {stats.low.completed} of {stats.low.total} completed (
                   {stats.low.total > 0
                     ? Math.round((stats.low.completed / stats.low.total) * 100)
@@ -261,7 +261,7 @@ function StatisticsView({ tasks = [] }) {
                   %)
                 </span>
               </div>
-              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-gray-100">
+              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-[#233428]">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{
@@ -278,8 +278,8 @@ function StatisticsView({ tasks = [] }) {
             </div>
           </div>
 
-          <div className="mt-8 rounded-2xl border border-gray-100 bg-gray-50 p-4">
-            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500">
+          <div className="mt-8 rounded-2xl border border-gray-100 bg-gray-50 p-4 dark:border-[#233428] dark:bg-[#121c15]">
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500 dark:text-gray-400">
               <span>
                 💡 <strong>Tip:</strong> Clear high-priority items first in your morning to maximize daily output.
               </span>

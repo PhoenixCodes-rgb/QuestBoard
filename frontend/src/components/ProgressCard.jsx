@@ -12,25 +12,25 @@ function ProgressCard({
   );
 
   return (
-    <div className="rounded-3xl bg-white p-6 shadow-sm">
+    <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 dark:border-[#233428] dark:bg-[#17231c]">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Daily progress
           </p>
 
-          <h2 className="mt-2 text-3xl font-semibold text-gray-900">
+          <h2 className="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">
             {safePercentage}%
           </h2>
         </div>
 
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-50 text-green-600">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-50 text-green-600 dark:bg-green-950/50 dark:text-green-400">
           <FiTrendingUp size={19} />
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="mt-6 h-2.5 overflow-hidden rounded-full bg-gray-100">
+      <div className="mt-6 h-2.5 overflow-hidden rounded-full bg-gray-100 dark:bg-[#111a14]">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${safePercentage}%` }}
@@ -38,17 +38,17 @@ function ProgressCard({
             duration: 0.8,
             ease: "easeOut",
           }}
-          className="h-full rounded-full bg-[#3f8f5f]"
+          className="h-full rounded-full bg-[#3f8f5f] dark:bg-green-500"
         />
       </div>
 
-      <div className="mt-3 flex items-center justify-between text-xs text-gray-400">
+      <div className="mt-3 flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
         <span>
           {completed} of {total} completed
         </span>
 
         {safePercentage === 100 && total > 0 ? (
-          <span className="font-medium text-green-600">
+          <span className="font-medium text-green-600 dark:text-green-400">
             All done 🎉
           </span>
         ) : (
