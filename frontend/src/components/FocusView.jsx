@@ -169,19 +169,49 @@ function FocusView({ tasks = [], onToggleTask }) {
     [tasks, selectedTaskId]
   );
 
+  // Escape key exits Zen mode
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isZenMode) {
+        setIsZenMode(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isZenMode]);
+
   return (
     <div
-      className={`mt-8 space-y-8 transition-all ${
+      className={
         isZenMode
-          ? "fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#f5f7f2] p-6 dark:bg-[#0f1712]"
-          : ""
-      }`}
+          ? "fixed inset-0 top-0 left-0 z-[100] m-0 flex h-screen w-screen flex-col items-center overflow-y-auto bg-[#f5f7f2] p-4 sm:p-8 dark:bg-[#0f1712]"
+          : "mt-8 space-y-8"
+      }
     >
+      {/* Zen Mode Top Bar */}
+      {isZenMode && (
+        <div className="mb-2 flex w-full max-w-2xl items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-400">
+              Zen Focus Mode
+            </span>
+          </div>
+          <button
+            onClick={() => setIsZenMode(false)}
+            className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-gray-700 shadow-sm transition hover:bg-gray-100 dark:border-[#233428] dark:bg-[#17231c] dark:text-gray-200 dark:hover:bg-[#1f2e24]"
+            title="Exit Zen Mode (or press Esc)"
+          >
+            <FiMinimize2 size={13} />
+            <span>Exit Zen</span>
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       {!isZenMode && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
               Focus Mode
             </h1>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -201,7 +231,11 @@ function FocusView({ tasks = [], onToggleTask }) {
       )}
 
       {/* Main Focus Card */}
-      <div className="relative mx-auto w-full max-w-2xl rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition-colors duration-200 dark:border-[#233428] dark:bg-[#17231c]">
+      <div
+        className={`relative mx-auto w-full max-w-2xl rounded-3xl border border-gray-100 bg-white shadow-sm transition-colors duration-200 dark:border-[#233428] dark:bg-[#17231c] ${
+          isZenMode ? "p-5 sm:p-7 my-auto" : "p-8"
+        }`}
+      >
         {/* Top Control Strip inside Card */}
         <div className="flex items-center justify-between">
           {/* Mode Switcher */}
@@ -245,8 +279,8 @@ function FocusView({ tasks = [], onToggleTask }) {
         </div>
 
         {/* Circular Timer Display */}
-        <div className="relative my-8 flex items-center justify-center">
-          <svg className="h-72 w-72 -rotate-90 transform sm:h-80 sm:w-80">
+        <div className={`relative flex items-center justify-center ${isZenMode ? "my-4 sm:my-6" : "my-8"}`}>
+          <svg className={`-rotate-90 transform ${isZenMode ? "h-64 w-64 sm:h-72 sm:w-72" : "h-72 w-72 sm:h-80 sm:w-80"}`}>
             {/* Background circle track */}
             <circle
               cx="50%"
@@ -329,7 +363,9 @@ function FocusView({ tasks = [], onToggleTask }) {
         </div>
 
         {/* Quick Custom Time Buttons */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2 border-t border-gray-100 pt-6 dark:border-[#233428]">
+        <div className={`flex flex-wrap items-center justify-center gap-2 border-t border-gray-100 dark:border-[#233428] ${
+          isZenMode ? "mt-5 pt-4" : "mt-8 pt-6"
+        }`}>
           <span className="text-xs text-gray-400">Duration:</span>
           {[15, 25, 45, 60].map((m) => (
             <button
@@ -347,7 +383,9 @@ function FocusView({ tasks = [], onToggleTask }) {
         </div>
 
         {/* Task Selection Integration */}
-        <div className="mt-6 rounded-2xl bg-gray-50 p-4 transition-colors duration-200 dark:bg-[#111a14]">
+        <div className={`rounded-2xl bg-gray-50 p-4 transition-colors duration-200 dark:bg-[#111a14] ${
+          isZenMode ? "mt-4" : "mt-6"
+        }`}>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2">
               <FiTarget size={16} className="text-green-700 dark:text-green-400" />
