@@ -1,10 +1,17 @@
 import axios from "axios";
 
+const getBaseURL = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL.replace(/\/$/, "");
+  }
+  if (typeof window !== "undefined" && window.location.port === "5173") {
+    return "";
+  }
+  return "http://localhost:5000";
+};
+
 const API = axios.create({
-  baseURL:
-    typeof window !== "undefined" && window.location.port === "5173"
-      ? ""
-      : "http://localhost:5000",
+  baseURL: getBaseURL(),
 });
 
 export const checkServerHealth = async () => {
@@ -12,8 +19,9 @@ export const checkServerHealth = async () => {
     const res = await API.get("/");
     return Boolean(res.data?.message);
   } catch {
+    const fallbackUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
     try {
-      const res = await axios.get("http://localhost:5000/");
+      const res = await axios.get(`${fallbackUrl}/`);
       return Boolean(res.data?.message);
     } catch {
       return false;
